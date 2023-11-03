@@ -1,5 +1,4 @@
 import React from "react";
-// import nextI18NextConfig from "../../next-i18next.config";
 import { AppProps } from "next/app";
 import './globals.css';
 import Layout from "@common/layout";

@@ -1,3 +1,4 @@
+import { Menu } from "@components/header";
 import React, { ReactNode } from "react";
 
 interface LayoutProps {
@@ -7,6 +8,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="h-full bg-mainColor w-full">
+      <Menu />
       <main>{children}</main>
     </div>
   );
