@@ -60,4 +60,8 @@ body {
     font-family: 'kate-black';
     src: url('/static/fonts/Kate-Black.otf') format('truetype');
   }
+  @font-face {
+    font-family: 'neue-medium';
+    src: url('/static/fonts/NeueHelveticaBQMedium.otf') format('truetype');
+  }
 }
