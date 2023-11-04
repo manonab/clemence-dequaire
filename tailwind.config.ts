@@ -11,6 +11,8 @@ const config: Config = {
             colors: {
                 mainColor: "#FCF6EF",
                 grayBlack: "#201F20",
+                yellowHome: "#F8FAD2",
+                redHome: "#FF0101",
             },
             fontFamily: {
                 clash: ["Clash"],
@@ -22,6 +24,7 @@ const config: Config = {
                 kate: ["kate"],
                 kateMedium: ["kate-medium"],
                 kateBlak: ["kate-black"],
+                neueMedium: ["neue-medium"],
             },
         },
     },
