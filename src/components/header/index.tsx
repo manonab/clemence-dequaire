@@ -1,9 +1,11 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useClass } from "@context/className";
 
 export const Menu: React.FC = () => {
   const router = useRouter();
-
+  const { cssClass } = useClass();
+  console.log(cssClass)
   const pathTextMapping = [
     { path: "/about", name: "About" },
     { path: "/values", name: "My Values" },
@@ -12,7 +14,7 @@ export const Menu: React.FC = () => {
   ];
 
   return (
-    <div className="flex mx-auto justify-between py-[30px] px-[40px]" style={{ background: "linear-gradient(180deg, rgba(52, 57, 0, 0.20) 0%, rgba(233, 231, 209, 0.00) 100%)" }}>
+    <div className={`flex mx-auto justify-between py-[30px] px-[40px] ${cssClass}`}>
       <div onClick={() => router.push('/')} className="hover:cursor-pointer">
         <p className="text-grayBlack font-kateMedium text-3xl leading-8">C.</p>
       </div>
