@@ -5,7 +5,7 @@ import { useClass } from "@context/className";
 export const Menu: React.FC = () => {
   const router = useRouter();
   const { cssClass } = useClass();
-  console.log(cssClass)
+
   const pathTextMapping = [
     { path: "/about", name: "About" },
     { path: "/values", name: "My Values" },

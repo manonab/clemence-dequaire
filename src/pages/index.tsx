@@ -8,7 +8,7 @@ import { useClass } from "@context/className";
 import BackgroundSlider from "@components/home/backgroundSlider";
 
 const Home: NextPage = () => {
-  const { updateClass } = useClass();
+  const { setCssClass } = useClass();
   const [currentImage, setCurrentImage] = useState<number>(0);
   const [showLastPart, setShowLastPart] = useState<boolean>(false);
 
@@ -53,10 +53,15 @@ const Home: NextPage = () => {
     if (currentImage === images.length - 1) {
       setTimeout(() => {
         setShowLastPart(true);
-        updateClass("linear-yellow");
       }, 1500);
     }
   }, [currentImage, images.length]);
+
+  useEffect(() => {
+    if (showLastPart) {
+      setCssClass("linear-yellow animate__animated animate__fadeInUpBig");
+    }
+  }, [showLastPart]);
 
   return (
     <div className={`${currentImage === images.length - 1 ? "top-0" : "top-[80px]"} mx-auto top-[80px] relative h-full`}>

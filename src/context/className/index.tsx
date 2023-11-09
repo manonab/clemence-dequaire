@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface ClassContextProps {
   cssClass: string;
-  updateClass: (newClass: string) => void;
+  setCssClass: (newClass: string) => void;
 }
 
 export const ClassContext = createContext<ClassContextProps | undefined>(undefined);
@@ -16,14 +16,11 @@ export const useClass = () => {
 };
 
 export const ClassProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [cssClass, setCssClass] = useState<string>('linear-background');
+  const [cssClass, setCssClass] = useState<string>("");
 
-  const updateClass = (newClass: string) => {
-    setCssClass(newClass);
-  };
 
   return (
-    <ClassContext.Provider value={{ cssClass, updateClass }}>
+    <ClassContext.Provider value={{ cssClass, setCssClass }}>
       {children}
     </ClassContext.Provider>
   );
