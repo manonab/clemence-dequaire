@@ -6,11 +6,16 @@ import Image from "next/image";
 import { Images } from "@common/image";
 import { useClass } from "@context/className";
 import BackgroundSlider from "@components/home/backgroundSlider";
+import HomeComponent from "@components/home";
 
 const Home: NextPage = () => {
   const { setCssClass } = useClass();
-  const [currentImage, setCurrentImage] = useState<number>(0);
-  const [showLastPart, setShowLastPart] = useState<boolean>(false);
+  const animationClass = "animate__animated animate__fadeInUpBig";
+  const [state, setState] = useState({
+    currentImage: 0,
+    showLastPart: false,
+    animationFinished: false,
+  });
 
   const images = [
     Images.eye,
@@ -29,20 +34,19 @@ const Home: NextPage = () => {
 
   const startSlideShow = () => {
     const interval = setInterval(() => {
-      setCurrentImage((prevImage) =>
-        prevImage < images.length - 1 ? prevImage + 1 : prevImage
-      );
+      setState((prev) => ({
+        ...prev,
+        currentImage: prev.currentImage < images.length - 1 ? prev.currentImage + 1 : prev.currentImage,
+      }));
     }, 150);
 
     return () => clearInterval(interval);
   };
 
   useEffect(() => {
-    const fadeInUpAnimationDuration = 1200;
-
     const fadeInUpAnimationTimer = setTimeout(() => {
       startSlideShow();
-    }, fadeInUpAnimationDuration);
+    }, 1200);
 
     return () => {
       clearTimeout(fadeInUpAnimationTimer);
@@ -50,37 +54,42 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    if (currentImage === images.length - 1) {
+    if (state.currentImage === images.length - 1) {
       setTimeout(() => {
-        setShowLastPart(true);
+        setState((prev) => ({ ...prev, showLastPart: true }));
       }, 1500);
     }
-  }, [currentImage, images.length]);
+  }, [state.currentImage, images.length]);
 
   useEffect(() => {
-    if (showLastPart) {
-      setCssClass("linear-yellow animate__animated animate__fadeInUpBig");
+    if (state.showLastPart) {
+      setCssClass("linear-yellow " + animationClass);
+      setTimeout(() => {
+        setState((prev) => ({ ...prev, animationFinished: true }));
+        setCssClass('linear-background');
+      }, 3500);
     }
-  }, [showLastPart]);
+  }, [state.showLastPart]);
 
   return (
-    <div className={`${currentImage === images.length - 1 ? "top-0" : "top-[80px]"} mx-auto top-[80px] relative h-full`}>
+    <div className={`${state.currentImage === images.length - 1 ? "top-0" : "top-[80px]"} mx-auto top-[80px] relative h-full`}>
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`animate__animated animate__fadeInUpBig`}
+        className={animationClass}
       >
-        <Image
-          src={images[currentImage]}
+        {!state.animationFinished &&
+          <Image
+          src={images[state.currentImage]}
           alt="Image"
           width={400}
           height={400}
           className="rounded mx-auto"
         />
+        }
       </motion.div>
-      {showLastPart && (
-        <BackgroundSlider />
-      )}
+      {state.showLastPart && <BackgroundSlider isVisible={!state.animationFinished} />}
+      {state.animationFinished && <HomeComponent />}
     </div>
   );
 };

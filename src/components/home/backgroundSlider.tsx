@@ -1,8 +1,11 @@
 import { useClass } from "@context/className";
 import React, { useEffect, useState } from "react";
 
-const BackgroundSlider = () => {
-  const [isHovered, setIsHovered] = useState(false);
+interface BgProps {
+  isVisible: boolean;
+}
+const BackgroundSlider: React.FC<BgProps> = ({ isVisible = false }: BgProps) => {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const { setCssClass } = useClass();
 
   useEffect(() => {
@@ -17,7 +20,7 @@ const BackgroundSlider = () => {
   }, []);
 
   return (
-    <div className={`bg_slider ${isHovered && "hovered"} w-full md:min-h-[910px] animate__animated animate__fadeInUpBig flex justify-between items-start z-10 h-full inset-0 absolute -top-20`}>
+    <div className={`${!isVisible ? "hidden" : "w-full md:min-h-[910px] animate__animated animate__fadeInUpBig flex justify-between items-start z-10 h-full inset-0 absolute -top-20 bg_slider "} ${isHovered && "hovered"}`}>
       <div className="flex-col">
         <p className={`move-left-to-right  uppercase text-[245px] leading-[200px] font-neueExtra`} style={{ animationDelay: "2s" }}>
           for
